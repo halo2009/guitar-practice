@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>기타 지판</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="title-wrap">
+        <p class="eyebrow">Guitar Practice</p>
+        <h1>기타 지판</h1>
+        <p class="top-desc">로즈우드 느낌 지판 · 전체 스케일 보기 · 1~5 포지션 보기</p>
+      </div>
+      <button id="resetBtn" class="ghost-btn" type="button">초기화</button>
+    </header>
+
+    <main class="layout">
+      <section class="panel controls-panel">
+        <div class="panel-head">
+          <h2>지판 설정</h2>
+          <p>전체 음, 특정 음, 전체 스케일, 1~5 포지션 패턴 보기</p>
+        </div>
+
+        <div class="control-group">
+          <label for="viewMode">보기 방식</label>
+          <select id="viewMode">
+            <option value="all">전체 음 보기</option>
+            <option value="note">특정 음만 보기</option>
+            <option value="scale">스케일 전체 보기</option>
+            <option value="pattern">스케일 패턴 보기</option>
+          </select>
+        </div>
+
+        <div class="control-group" id="noteGroup">
+          <label for="noteSelect">음 선택</label>
+          <select id="noteSelect"></select>
+        </div>
+
+        <div class="control-group" id="keyGroup">
+          <label for="keySelect">키 선택</label>
+          <select id="keySelect"></select>
+        </div>
+
+        <div class="control-group" id="scaleGroup">
+          <label for="scaleSelect">스케일 종류</label>
+          <select id="scaleSelect">
+            <option value="major">Major</option>
+            <option value="naturalMinor">Natural Minor</option>
+            <option value="majorPentatonic">Major Pentatonic</option>
+            <option value="minorPentatonic">Minor Pentatonic</option>
+            <option value="blues">Blues</option>
+            <option value="dorian">Dorian</option>
+            <option value="phrygian">Phrygian</option>
+            <option value="lydian">Lydian</option>
+            <option value="mixolydian">Mixolydian</option>
+            <option value="locrian">Locrian</option>
+          </select>
+        </div>
+
+        <div class="control-group" id="patternGroup">
+          <label for="patternSelect">패턴 선택</label>
+          <select id="patternSelect">
+            <option value="1">패턴 1</option>
+            <option value="2">패턴 2</option>
+            <option value="3">패턴 3</option>
+            <option value="4">패턴 4</option>
+            <option value="5">패턴 5</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="fretCount">표시 프렛 수</label>
+          <select id="fretCount">
+            <option value="12">12프렛</option>
+            <option value="15">15프렛</option>
+          </select>
+        </div>
+
+        <div class="info-card">
+          <h3>현재 보기</h3>
+          <p id="patternInfo">전체 지판 기준으로 표시 중</p>
+        </div>
+
+        <div class="position-card" id="positionCard">
+          <div class="position-card-head">
+            <h3>포지션 정보</h3>
+            <span id="positionRangeBadge" class="range-badge">전체</span>
+          </div>
+          <p id="positionRangeText">현재는 전체 지판을 보고 있다.</p>
+        </div>
+
+        <div class="legend-wrap">
+          <div class="legend-item">
+            <span class="legend-dot legend-root"></span>
+            루트
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot legend-scale"></span>
+            스케일 음
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot legend-note"></span>
+            선택 음
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot legend-window"></span>
+            패턴 구간
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot legend-start"></span>
+            시작/끝 프렛
+          </div>
+        </div>
+      </section>
+
+      <section class="panel board-panel">
+        <div class="panel-head board-head">
+          <div>
+            <h2 id="boardTitle">전체 음 보기</h2>
+            <p id="boardSubtitle">기타 지판의 모든 음을 표시한다.</p>
+          </div>
+        </div>
+
+        <div class="pattern-bar-wrap" id="patternBarWrap">
+          <div class="pattern-bar">
+            <div id="patternBarFill" class="pattern-bar-fill"></div>
+          </div>
+          <div class="pattern-bar-labels">
+            <span id="patternStartLabel">시작</span>
+            <span id="patternEndLabel">끝</span>
+          </div>
+        </div>
+
+        <div class="fretboard-scroll">
+          <div class="fretboard-stage">
+            <div id="fretNumbers" class="fret-numbers"></div>
+            <div id="fretboard" class="fretboard" aria-label="기타 지판"></div>
+            <div id="inlays" class="inlays"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="fretboard.js"></script>
+</body>
+</html>
