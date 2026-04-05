@@ -2,152 +2,329 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-  <title>기타 지판</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Guitar Trainer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div class="title-wrap">
-        <p class="eyebrow">Guitar Practice</p>
-        <h1>기타 지판</h1>
-        <p class="top-desc">로즈우드 느낌 지판 · 전체 스케일 보기 · 1~5 포지션 보기</p>
-      </div>
-      <button id="resetBtn" class="ghost-btn" type="button">초기화</button>
+  <div class="app">
+    <header class="header">
+      <h1>Guitar Trainer</h1>
+      <p>지판 · 랜덤 코드 · 귀훈련 · 화성학</p>
     </header>
 
-    <main class="layout">
-      <section class="panel controls-panel">
-        <div class="panel-head">
-          <h2>지판 설정</h2>
-          <p>전체 음, 특정 음, 전체 스케일, 1~5 포지션 패턴 보기</p>
-        </div>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="fretboardTab">지판</button>
+      <button class="tab-btn" data-tab="randomChordTab">랜덤 코드</button>
+      <button class="tab-btn" data-tab="earTrainingTab">귀훈련</button>
+      <button class="tab-btn" data-tab="harmonyTab">화성학</button>
+    </nav>
 
-        <div class="control-group">
-          <label for="viewMode">보기 방식</label>
-          <select id="viewMode">
-            <option value="all">전체 음 보기</option>
-            <option value="note">특정 음만 보기</option>
-            <option value="scale">스케일 전체 보기</option>
-            <option value="pattern">스케일 패턴 보기</option>
-          </select>
-        </div>
+    <main>
+      <!-- 지판 -->
+      <section id="fretboardTab" class="tab-panel active">
+        <div class="card">
+          <h2>기타 지판</h2>
 
-        <div class="control-group" id="noteGroup">
-          <label for="noteSelect">음 선택</label>
-          <select id="noteSelect"></select>
-        </div>
+          <div class="controls">
+            <div class="control">
+              <label for="keySelect">키</label>
+              <select id="keySelect"></select>
+            </div>
 
-        <div class="control-group" id="keyGroup">
-          <label for="keySelect">키 선택</label>
-          <select id="keySelect"></select>
-        </div>
+            <div class="control">
+              <label for="scaleCategorySelect">스케일 분류</label>
+              <select id="scaleCategorySelect"></select>
+            </div>
 
-        <div class="control-group" id="scaleGroup">
-          <label for="scaleSelect">스케일 종류</label>
-          <select id="scaleSelect">
-            <option value="major">Major</option>
-            <option value="naturalMinor">Natural Minor</option>
-            <option value="majorPentatonic">Major Pentatonic</option>
-            <option value="minorPentatonic">Minor Pentatonic</option>
-            <option value="blues">Blues</option>
-            <option value="dorian">Dorian</option>
-            <option value="phrygian">Phrygian</option>
-            <option value="lydian">Lydian</option>
-            <option value="mixolydian">Mixolydian</option>
-            <option value="locrian">Locrian</option>
-          </select>
-        </div>
-
-        <div class="control-group" id="patternGroup">
-          <label for="patternSelect">패턴 선택</label>
-          <select id="patternSelect">
-            <option value="1">패턴 1</option>
-            <option value="2">패턴 2</option>
-            <option value="3">패턴 3</option>
-            <option value="4">패턴 4</option>
-            <option value="5">패턴 5</option>
-          </select>
-        </div>
-
-        <div class="control-group">
-          <label for="fretCount">표시 프렛 수</label>
-          <select id="fretCount">
-            <option value="12">12프렛</option>
-            <option value="15">15프렛</option>
-          </select>
-        </div>
-
-        <div class="info-card">
-          <h3>현재 보기</h3>
-          <p id="patternInfo">전체 지판 기준으로 표시 중</p>
-        </div>
-
-        <div class="position-card" id="positionCard">
-          <div class="position-card-head">
-            <h3>포지션 정보</h3>
-            <span id="positionRangeBadge" class="range-badge">전체</span>
+            <div class="control">
+              <label for="scaleSelect">스케일</label>
+              <select id="scaleSelect"></select>
+            </div>
           </div>
-          <p id="positionRangeText">현재는 전체 지판을 보고 있다.</p>
-        </div>
 
-        <div class="legend-wrap">
-          <div class="legend-item">
-            <span class="legend-dot legend-root"></span>
-            루트
+          <div class="controls second-row">
+            <div class="control single-control">
+              <label for="noteFilterSelect">음 필터</label>
+              <select id="noteFilterSelect"></select>
+            </div>
           </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-scale"></span>
-            스케일 음
+
+          <div class="button-row">
+            <button id="showScaleBtn" class="primary active-mode">선택 스케일 보기</button>
+            <button id="showAllBtn" class="secondary">모든 음 보기</button>
           </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-note"></span>
-            선택 음
+
+          <div class="info-box">
+            <div class="info-label">구성음</div>
+            <div id="scaleNotesOutput">-</div>
           </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-window"></span>
-            패턴 구간
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-start"></span>
-            시작/끝 프렛
+
+          <div class="fretboard-scroll">
+            <div id="fretboard"></div>
           </div>
         </div>
       </section>
 
-      <section class="panel board-panel">
-        <div class="panel-head board-head">
-          <div>
-            <h2 id="boardTitle">전체 음 보기</h2>
-            <p id="boardSubtitle">기타 지판의 모든 음을 표시한다.</p>
+      <!-- 랜덤 코드 -->
+      <section id="randomChordTab" class="tab-panel">
+        <div class="card">
+          <h2>랜덤 코드</h2>
+
+          <div class="info-box">
+            현재 랜덤 코드는 <strong>M / m</strong> 표기를 사용하고,
+            루트 줄은 <strong>(R5)</strong>, <strong>(R6)</strong> 형식으로 표시한다.
+          </div>
+
+          <div class="button-row">
+            <button id="generateProgressBtn" class="primary">4개 반복코드</button>
+            <button id="generateSetBtn" class="secondary">전체 랜덤</button>
+          </div>
+
+          <div class="info-box compact">
+            <div class="info-label">현재 포함된 코드 타입</div>
+            <div id="chordTypesSummary">-</div>
+          </div>
+
+          <div class="progress-output-wrap">
+            <div class="info-label">출력 결과</div>
+            <div id="randomChordOutput" class="progress-output">버튼을 눌러 코드를 생성해봐.</div>
           </div>
         </div>
+      </section>
 
-        <div class="pattern-bar-wrap" id="patternBarWrap">
-          <div class="pattern-bar">
-            <div id="patternBarFill" class="pattern-bar-fill"></div>
+      <!-- 귀훈련 -->
+      <section id="earTrainingTab" class="tab-panel">
+        <div class="card">
+          <h2>귀훈련</h2>
+
+          <div class="controls">
+            <div class="control">
+              <label for="earModeSelect">문제 종류</label>
+              <select id="earModeSelect">
+                <option value="single-note">음 맞추기</option>
+                <option value="major-minor">메이저 / 마이너 구분</option>
+              </select>
+            </div>
+
+            <div class="control">
+              <label for="startOctaveSelect">시작 옥타브</label>
+              <select id="startOctaveSelect">
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+
+            <div class="control">
+              <label for="octaveSpanSelect">옥타브 폭</label>
+              <select id="octaveSpanSelect">
+                <option value="0">0옥타브</option>
+                <option value="1" selected>1옥타브</option>
+                <option value="2">2옥타브</option>
+              </select>
+            </div>
           </div>
-          <div class="pattern-bar-labels">
-            <span id="patternStartLabel">시작</span>
-            <span id="patternEndLabel">끝</span>
+
+          <div class="controls second-row">
+            <div class="control single-control">
+              <label for="difficultySelect">난이도</label>
+              <select id="difficultySelect">
+                <option value="easy">쉬움</option>
+                <option value="normal" selected>보통</option>
+                <option value="hard">어려움</option>
+              </select>
+            </div>
           </div>
+
+          <div class="button-row">
+            <button id="newQuestionBtn" class="primary">새 문제</button>
+            <button id="playQuestionBtn" class="secondary">다시 듣기</button>
+          </div>
+
+          <div id="earQuestionBox" class="info-box">새 문제를 눌러 시작해.</div>
+
+          <div id="singleNoteAnswerWrap" class="piano-answer-wrap">
+            <div class="info-label">피아노 건반으로 정답 선택</div>
+            <div id="answerPiano" class="answer-piano"></div>
+          </div>
+
+          <div id="majorMinorAnswerWrap" class="major-minor-wrap">
+            <button class="answer-choice-btn" data-mm-answer="Major">Major</button>
+            <button class="answer-choice-btn" data-mm-answer="Minor">Minor</button>
+          </div>
+
+          <div id="earResult" class="info-box">-</div>
         </div>
+      </section>
 
-        <div class="fretboard-scroll">
-          <div class="fretboard-stage">
-            <div id="fretNumbers" class="fret-numbers"></div>
-            <div id="fretboard" class="fretboard" aria-label="기타 지판"></div>
-            <div id="inlays" class="inlays"></div>
+      <!-- 화성학 -->
+      <section id="harmonyTab" class="tab-panel">
+        <div class="card">
+          <h2>화성학</h2>
+
+          <div class="controls">
+            <div class="control">
+              <label for="harmonyKeySelect">키</label>
+              <select id="harmonyKeySelect"></select>
+            </div>
+
+            <div class="control">
+              <label for="harmonyScaleCategorySelect">스케일 분류</label>
+              <select id="harmonyScaleCategorySelect"></select>
+            </div>
+
+            <div class="control">
+              <label for="harmonyScaleSelect">스케일</label>
+              <select id="harmonyScaleSelect"></select>
+            </div>
+          </div>
+
+          <!-- 스케일 -->
+          <div class="learn-card">
+            <h3>1. 스케일 이해</h3>
+            <p class="learn-desc">
+              스케일은 음을 일정한 규칙으로 나열한 것이다. 코드와 멜로디의 재료가 된다.
+            </p>
+            <div class="learn-mini">같은 스케일인데 이름만 다른 경우도 있다. 예: Major = Ionian, Natural Minor = Aeolian</div>
+            <div class="harmony-grid">
+              <div class="info-box">
+                <div class="info-label">현재 키 예시 - 구성음</div>
+                <div id="harmonyScaleNotes">-</div>
+              </div>
+              <div class="info-box">
+                <div class="info-label">현재 키 예시 - 도수</div>
+                <div id="harmonyDegrees">-</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 다이아토닉 -->
+          <div class="learn-card">
+            <h3>2. 다이아토닉 코드 이해</h3>
+            <p class="learn-desc">
+              다이아토닉 코드는 선택한 스케일 안의 음만 쌓아서 만든 기본 코드다.
+              곡의 가장 기본적인 뼈대가 된다.
+            </p>
+            <div class="learn-mini">
+              3화음은 1-3-5를 쌓은 코드이고, 7화음은 여기에 7음을 더한 코드다.
+            </div>
+            <div class="harmony-grid">
+              <div class="info-box">
+                <div class="info-label">3화음 다이아토닉 코드</div>
+                <div id="diatonicTriads">-</div>
+              </div>
+              <div class="info-box">
+                <div class="info-label">7다이아토닉 코드</div>
+                <div id="diatonicSevenths">-</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 코드톤/텐션 -->
+          <div class="learn-card">
+            <h3>3. 코드톤과 텐션</h3>
+            <p class="learn-desc">
+              코드톤은 그 코드를 이루는 핵심음이고, 텐션은 코드에 색깔을 더하는 음이다.
+              먼저 코드톤을 확실히 알고, 그 다음 텐션을 보는 게 맞다.
+            </p>
+            <div class="controls second-row">
+              <div class="control">
+                <label for="harmonyChordSelect">분석할 코드 선택</label>
+                <select id="harmonyChordSelect"></select>
+              </div>
+            </div>
+            <div class="harmony-grid">
+              <div class="info-box">
+                <div class="info-label">코드톤</div>
+                <div id="chordTonesBox">-</div>
+              </div>
+              <div class="info-box">
+                <div class="info-label">텐션음</div>
+                <div id="chordTensionsBox">-</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 진행 -->
+          <div class="learn-card">
+            <h3>4. 코드 진행</h3>
+            <p class="learn-desc">
+              코드 진행은 코드가 이어지는 순서다. 실용음악에서는 2-5-1, 1-6-2-5 같은 공식이 자주 쓰인다.
+            </p>
+            <div class="controls">
+              <div class="control">
+                <label for="progressionSelect">진행 공식</label>
+                <select id="progressionSelect"></select>
+              </div>
+              <div class="control">
+                <label for="transposeSelect">이조 / 전조</label>
+                <select id="transposeSelect"></select>
+              </div>
+              <div class="control">
+                <label>&nbsp;</label>
+                <button id="applyTransposeBtn" class="secondary full-width-btn">적용</button>
+              </div>
+            </div>
+            <div class="harmony-grid">
+              <div class="info-box">
+                <div class="info-label">현재 키 예시</div>
+                <div id="progressionBox">-</div>
+              </div>
+              <div class="info-box">
+                <div class="info-label">전조 / 이조 결과</div>
+                <div id="transposeBox">-</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 확장 화성 -->
+          <div class="learn-card">
+            <h3>5. 확장 화성</h3>
+            <div class="harmony-grid">
+              <div class="info-box">
+                <div class="info-label">5도권 설명</div>
+                <div class="explain-text">조표와 키의 관계를 정리한 표다. 가까운 키끼리 어떤 관계인지 보기 쉽다.</div>
+                <div id="circleOfFifthsBox" class="detail-block">-</div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-label">세컨더리 도미넌트 설명</div>
+                <div class="explain-text">특정 코드로 더 강하게 진행시키기 위해 잠깐 빌려오는 임시 도미넌트다.</div>
+                <div id="secondaryDominantsBox" class="detail-block">-</div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-label">related iim7 설명</div>
+                <div class="explain-text">도미넌트7 코드 앞에는 보통 그 도미넌트로 향하는 iim7을 붙일 수 있다.</div>
+                <div id="relatedIIm7Box" class="detail-block">-</div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-label">증4도 대리화음 설명</div>
+                <div class="explain-text">도미넌트7 코드를 증4도 떨어진 다른 도미넌트7로 바꿔 쓸 수 있다.</div>
+                <div id="tritoneSubBox" class="detail-block">-</div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-label">모달 인터체인지 설명</div>
+                <div class="explain-text">같은 으뜸음을 가진 다른 스케일에서 코드를 빌려오는 것이다.</div>
+                <div id="modalInterchangeBox" class="detail-block">-</div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-label">특수 스케일 설명</div>
+                <div class="explain-text">일반 메이저/마이너 외에 특별한 분위기를 만드는 스케일들이다.</div>
+                <div id="specialScalesBox" class="detail-block">-</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </main>
   </div>
 
-  <script src="fretboard.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
