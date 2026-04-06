@@ -19,12 +19,12 @@ const NOTE_INDEX = {
 };
 
 const STRINGS = [
-  { num: 6, open: "E", label: "6(E)" },
-  { num: 5, open: "A", label: "5(A)" },
-  { num: 4, open: "D", label: "4(D)" },
-  { num: 3, open: "G", label: "3(G)" },
+  { num: 1, open: "E", label: "1(E)" },
   { num: 2, open: "B", label: "2(B)" },
-  { num: 1, open: "E", label: "1(E)" }
+  { num: 3, open: "G", label: "3(G)" },
+  { num: 4, open: "D", label: "4(D)" },
+  { num: 5, open: "A", label: "5(A)" },
+  { num: 6, open: "E", label: "6(E)" }
 ];
 
 const SCALE_LIBRARY = {
